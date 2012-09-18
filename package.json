@@ -1,0 +1,20 @@
+{
+  "name": "pronto-webdav",
+  "description": "A Generic WebDAV Gateway",
+  "keywords": ["webdav", "http", "pronto"],
+  "version": "0.0.1",
+  "author": "Matt Butcher <matthew.butcher@hp.com>",
+  "contributors": [
+    {"name": "Matt Butcher", "email": "matthew.butcher@hp.com"},
+    {"name": "Matt Farina", "email": "matthew.farina@hp.com"}
+  ],
+  "repository": "git://github.com/technosophos/pronto-webdav",
+  "main": "index",
+  "scripts": {
+    "test": "make test"
+  },
+  "dependencies": {
+    "pronto": ">=0.3"
+  },
+  "engines": {"node": ">= 0.4.9 < 1.0.0"}
+}
