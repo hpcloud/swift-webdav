@@ -12,6 +12,10 @@ register
   .route('GET')
   .route('OPTIONS')
     .includes('@bootstrap')
+    .does(webdav.http.HandleOptions, 'options')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers').from('cxt:options')
+      .using('code', 200)
   .route('HEAD')
   .route('DELETE')
   .route('PROPFIND')
@@ -23,7 +27,7 @@ register
   .route('REPORT')
 ;
 
-
+// TODO: Need top-level error handling.
 
 var server = pronto.HTTPServer.createServer(register, initialContext);
 server.setResolver(new webdav.MethodBasedRequestResolver());
