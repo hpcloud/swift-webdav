@@ -50,12 +50,20 @@ register
       .using('name').from('cxt:path')
     .does(webdav.http.HandleHead, 'head')
       .using('resource').from('cxt:resource')
-    //.does(pronto.commands.HTTPResponse)
-    .does(webdav.http.StreamedHTTPResponse)
+    .does(pronto.commands.HTTPResponse)
       .using('headers', {}).from('cxt:httpHeaders')
       .using('code', 404).from('cxt:head')
   .route('DELETE')
     .includes('@bootstrap')
+    .does(webdav.backend.LoadResource, 'resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('name').from('cxt:path')
+    .does(webdav.http.HandleDelete, 'delete')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('resource').from('cxt:resource')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}).from('cxt:httpHeaders')
+      .using('code', 404).from('cxt:delete')
   .route('PROPFIND')
     .includes('@bootstrap')
   .route('MKCOL')
@@ -70,6 +78,20 @@ register
     .includes('@bootstrap')
   .route('REPORT')
     .includes('@bootstrap')
+
+  // ================================================================
+  // Error Routes
+  .route('@500')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}) //.from('cxt:httpHeaders')
+      .using('code', 500)
+      .using('body', '<html><head><title>Server Error</title></head><body>Server Error</body></html>')
+  // ================================================================
+  .route('@404')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}) //.from('cxt:httpHeaders')
+      .using('code', 404)
+      .using('body', '<html><head><title>Not Found</title></head><body>Not Found</body></html>')
 ;
 
 // TODO: Need top-level error handling.
