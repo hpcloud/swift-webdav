@@ -12,6 +12,8 @@ var initialContext = new pronto.Context({
 });
 
 register
+  // Set up the logger
+  .logger(pronto.logging.ConsoleLogger)
   // Operations common across the board.
   .route('@bootstrap')
     .does(webdav.http.GetNormalizedPath, 'path')
@@ -31,6 +33,7 @@ register
     .does(pronto.commands.HTTPResponse)
       .using('headers').from('cxt:options')
       .using('code', 200)
+
   .route('GET')
     .includes('@bootstrap')
     .does(webdav.backend.LoadResource, 'resource')
@@ -43,6 +46,7 @@ register
       .using('headers', {}).from('cxt:httpHeaders')
       .using('code', 404).from('cxt:get')
       .using('stream').from('resource:stream')
+
   .route('HEAD')
     .includes('@bootstrap')
     .does(webdav.backend.LoadResource, 'resource')
@@ -53,6 +57,7 @@ register
     .does(pronto.commands.HTTPResponse)
       .using('headers', {}).from('cxt:httpHeaders')
       .using('code', 404).from('cxt:head')
+
   .route('DELETE')
     .includes('@bootstrap')
     .does(webdav.backend.LoadResource, 'resource')
@@ -64,11 +69,13 @@ register
     .does(pronto.commands.HTTPResponse)
       .using('headers', {}).from('cxt:httpHeaders')
       .using('code', 404).from('cxt:delete')
+
+  .route('PUT')
+    .includes('@bootstrap')
+
   .route('PROPFIND')
     .includes('@bootstrap')
   .route('MKCOL')
-    .includes('@bootstrap')
-  .route('PUT')
     .includes('@bootstrap')
   .route('PROPPATCH')
     .includes('@bootstrap')
@@ -81,17 +88,34 @@ register
 
   // ================================================================
   // Error Routes
-  .route('@500')
-    .does(pronto.commands.HTTPResponse)
-      .using('headers', {}) //.from('cxt:httpHeaders')
-      .using('code', 500)
-      .using('body', '<html><head><title>Server Error</title></head><body>Server Error</body></html>')
   // ================================================================
   .route('@404')
+    .does(pronto.commands.SPrintF, 'body')
+      .using('format', pronto.commands.SPrintF.HTML5)
+      .using('1', 'Not Found')
+      .using('2', 'Not Found')
     .does(pronto.commands.HTTPResponse)
       .using('headers', {}) //.from('cxt:httpHeaders')
       .using('code', 404)
-      .using('body', '<html><head><title>Not Found</title></head><body>Not Found</body></html>')
+      .using('body').from('cxt:body')
+  .route('@500')
+    .does(pronto.commands.SPrintF, 'body')
+      .using('format', pronto.commands.SPrintF.HTML5)
+      .using('1', 'Internal Server Error')
+      .using('2', 'Internal Server Error').from('cxt:httpError')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}) //.from('cxt:httpHeaders')
+      .using('code', 500)
+      .using('body').from('cxt:body')
+  .route('@501')
+    .does(pronto.commands.SPrintF, 'body')
+      .using('format', pronto.commands.SPrintF.HTML5)
+      .using('1', 'Not Implemented')
+      .using('2', 'Not Implemented').from('cxt:httpError')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}) //.from('cxt:httpHeaders')
+      .using('code', 501)
+      .using('body').from('cxt:body')
 ;
 
 // TODO: Need top-level error handling.
