@@ -4,6 +4,20 @@ var assert = require('assert');
 
 var START = Date.now();
 
+// guessMimeType
+
+assert.equal('application/x-octet-stream', U.guessContentType('foo/bar'));
+assert.equal('application/x-octet-stream', U.guessContentType('foo/bar.nosuchextension'));
+assert.equal('text/html', U.guessContentType('foo.html'));
+assert.equal('text/html', U.guessContentType('/buz/buzz/foo.htm'));
+assert.equal('text/plain', U.guessContentType('/buz/buzz/foo.txt'));
+assert.equal('text/plain', U.guessContentType('/buz/buzz/foo.mdown'));
+assert.equal('text/plain', U.guessContentType('/buz/buzz/foo.txt.bz2'));
+assert.equal('text/plain', U.guessContentType('/buz/buzz/foo.txt.bz2.gz.gzip.zip.bz'));
+assert.equal('application/x-msdos-program', U.guessContentType('bz/buzz/foo.exe'));
+assert.equal('application/vnd.openxmlformats-officedocument.presentationml.presentation', U.guessContentType('bz/buzz/foo.pptx'));
+
+
 
 // checkPreconditions()
 
