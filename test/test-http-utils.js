@@ -17,7 +17,10 @@ assert.equal('text/plain', U.guessContentType('/buz/buzz/foo.txt.bz2.gz.gzip.zip
 assert.equal('application/x-msdos-program', U.guessContentType('bz/buzz/foo.exe'));
 assert.equal('application/vnd.openxmlformats-officedocument.presentationml.presentation', U.guessContentType('bz/buzz/foo.pptx'));
 
-
+// Guess content type
+assert.equal('bzip2', U.guessContentEncoding('/buz/buzz/foo.txt.bz2'));
+assert.equal('gzip', U.guessContentEncoding('/buz/buzz/foo.txt.bz2.gz.gzip'));
+assert.equal('deflate', U.guessContentEncoding('/buz/buzz/foo.txt.zip'));
 
 // checkPreconditions()
 
