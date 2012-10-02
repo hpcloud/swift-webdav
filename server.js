@@ -87,6 +87,18 @@ register
 
   .route('PROPFIND')
     .includes('@bootstrap')
+    .does(webdav.xml.ParseXML, 'xml')
+      // XXX: Currently, we're not buffering this.
+      //.using('input').from('cxt:input')
+    .does(webdav.http.HandlePropfind, 'propfind')
+      .using('path').from('cxt:path')
+      .using('resource').from('cxt:resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('xml').from('cxt:xml')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}).from('cxt:httpHeaders')
+      .using('code', 404).from('cxt:propfind')
+
   .route('MKCOL')
     .includes('@bootstrap')
   .route('PROPPATCH')
@@ -97,6 +109,10 @@ register
     .includes('@bootstrap')
   .route('REPORT')
     .includes('@bootstrap')
+    .does(webdav.http.HandleReport, 'report')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}).from('cxt:httpHeaders')
+      .using('code', 404).from('cxt:report')
 
   // ================================================================
   // Error Routes
