@@ -1,0 +1,9 @@
+# Example XML files
+
+These can be used for testing.
+
+Example with CURL:
+
+```
+curl -X PROPFIND --upload-file "test/xml/propfind-allprops.xml" -vvv http://localhost:8000/
+```
