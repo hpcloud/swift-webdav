@@ -20,6 +20,7 @@ register
       .using('baseURI').from('cxt:baseURI')
     .does(fsdav.LoadFSBridge, 'bridge')
       .using('root', './data')
+      .using('baseURI').from('cxt:baseURI')
   // ================================================================
   // HTTP Operations.
   // ================================================================
