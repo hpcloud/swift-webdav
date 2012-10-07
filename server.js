@@ -21,6 +21,8 @@ register
     .does(fsdav.LoadFSBridge, 'bridge')
       .using('root', './data')
       .using('baseURI').from('cxt:baseURI')
+    .does(webdav.backend.LogAccess, 'accesslog')
+      //.using('level', 'info')
   // ================================================================
   // HTTP Operations.
   // ================================================================
@@ -108,6 +110,9 @@ register
 
   .route('PROPPATCH')
     .includes('@bootstrap')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers').from('cxt:options')
+      .using('code', 404)
 
   // Since we support extended-mkcol, this can return
   // 201 or 207, with our without a body.
