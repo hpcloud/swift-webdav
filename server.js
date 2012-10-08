@@ -93,9 +93,9 @@ register
 
   .route('PROPFIND')
     .includes('@bootstrap')
-    .does(webdav.xml.ParseXML, 'xml')
       // XXX: Currently, we're not buffering this.
       //.using('input').from('cxt:input')
+    .does(webdav.xml.ParseXML, 'xml')
     .does(webdav.http.HandlePropfind, 'propfind')
       .using('path').from('cxt:path')
       .using('resource').from('cxt:resource')
@@ -196,6 +196,15 @@ register
       .using('headers', {}).from('cxt:httpHeaders')
       .using('code', 304)
 
+  .route('@400')
+    .does(pronto.commands.SPrintF, 'body')
+      .using('format', pronto.commands.SPrintF.HTML5)
+      .using('1', 'Bad Request')
+      .using('2', 'Bad Request')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers', {}) //.from('cxt:httpHeaders')
+      .using('code', 400)
+      .using('body').from('cxt:body')
   .route('@403')
     .does(pronto.commands.SPrintF, 'body')
       .using('format', pronto.commands.SPrintF.HTML5)
@@ -225,6 +234,7 @@ register
       .using('headers', {}) //.from('cxt:httpHeaders')
       .using('code', 405)
       .using('body').from('cxt:body')
+
   .route('@409')
     .does(pronto.commands.SPrintF, 'body')
       .using('format', pronto.commands.SPrintF.HTML5)
