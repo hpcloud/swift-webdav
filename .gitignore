@@ -1,3 +1,4 @@
 data/
 child.log
 debug.log
+node_modules/
