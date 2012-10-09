@@ -46,3 +46,11 @@ Pronto-WebDAV:
 
 - cadaver: http://www.webdav.org/cadaver/
 - nd: http://gohome.org/nd/
+
+## FAQ
+
+### Why don't you use Content-Length?
+
+We prefer chunked transfer where possible, letting the server optimize
+the network layer. Node.js handles this for us, provided we don't set
+the Content-Length header.
