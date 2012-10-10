@@ -96,6 +96,9 @@ register
       // XXX: Currently, we're not buffering this.
       //.using('input').from('cxt:input')
     .does(webdav.xml.ParseXML, 'xml')
+    .does(webdav.backend.LoadResource, 'resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('name').from('cxt:path')
     .does(webdav.http.HandlePropfind, 'propfind')
       .using('path').from('cxt:path')
       .using('resource').from('cxt:resource')
