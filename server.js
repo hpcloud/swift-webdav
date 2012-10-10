@@ -113,9 +113,21 @@ register
 
   .route('PROPPATCH')
     .includes('@bootstrap')
+    .does(webdav.xml.ParseXML, 'xml')
+    .does(webdav.backend.LoadResource, 'resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('name').from('cxt:path')
+    .does(webdav.http.HandleProppatch, 'proppatch')
+      .using('path').from('cxt:path')
+      .using('resource').from('cxt:resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('xml').from('cxt:xml')
+    .does(webdav.xml.SerializeXML, 'body')
+      .using('xml').from('cxt:proppatch')
     .does(pronto.commands.HTTPResponse)
-      .using('headers').from('cxt:options')
-      .using('code', 404)
+      .using('headers', {}).from('cxt:httpHeaders')
+      .using('code', 207).from('cxt:httpStatus')
+      .using('body').from('cxt:body')
 
   // Since we support extended-mkcol, this can return
   // 201 or 207, with our without a body.
