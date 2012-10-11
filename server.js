@@ -10,6 +10,7 @@ var register = new pronto.Registry();
 var initialContext = new pronto.Context({
   baseURI: '/test'
 });
+initialContext.addDatasource('properties', new fsdav.JSONPropStore('./properties.json'));
 
 register
   // Set up the logger
