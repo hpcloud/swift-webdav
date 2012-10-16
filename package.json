@@ -14,8 +14,9 @@
     "test": "make test"
   },
   "dependencies": {
+    "async": ">=0.1.22",
     "xmldom": ">=0.1.12",
-    "pronto": ">=0.3"
+    "pronto": ">=0.3.9"
   },
   "engines": {"node": ">= 0.4.9 < 1.0.0"}
 }
