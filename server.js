@@ -11,6 +11,7 @@ var initialContext = new pronto.Context({
   baseURI: '/test'
 });
 initialContext.addDatasource('properties', new fsdav.JSONPropStore('./properties.json'));
+initialContext.addDatasource('locks', new fsdav.LockStore());
 
 register
   // Set up the logger
@@ -23,6 +24,11 @@ register
       .using('root', './data')
       .using('baseURI').from('cxt:baseURI')
     .does(webdav.backend.LogAccess, 'accesslog')
+  .route('@loadresource')
+    .does(webdav.backend.LoadResource, 'resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('name').from('cxt:path')
+    // LOAD LOCK
       //.using('level', 'info')
   // ================================================================
   // HTTP Operations.
@@ -194,6 +200,27 @@ register
       .using('headers', {}).from('cxt:httpHeaders')
       .using('code', 201).from('cxt:move')
       .using('body').from('cxt:body')
+
+  .route('LOCK')
+    .includes('@bootstrap')
+    .does(webdav.backend.LoadResource, 'resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('name').from('cxt:path')
+    .does(webdav.xml.ParseXML, 'xml')
+    .does(webdav.xml.SerializeXML, 'body')
+      .using('xml').from('cxt:lock')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers').from('cxt:lock')
+      .using('code', 200)
+
+  .route('UNLOCK')
+    .includes('@bootstrap')
+    .does(webdav.backend.LoadResource, 'resource')
+      .using('resourceBridge').from('cxt:bridge')
+      .using('name').from('cxt:path')
+    .does(pronto.commands.HTTPResponse)
+      .using('headers').from('cxt:unlock')
+      .using('code', 200)
 
   .route('REPORT')
     .includes('@bootstrap')
