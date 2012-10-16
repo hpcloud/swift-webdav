@@ -54,3 +54,20 @@ Pronto-WebDAV:
 We prefer chunked transfer where possible, letting the server optimize
 the network layer. Node.js handles this for us, provided we don't set
 the Content-Length header.
+
+### Why do some Litmus tests fail?
+
+All major Litmus tests pass. However, there are a few regression tests
+that do not pass. These are explained below.
+
+Currently, the following Litmus tests fail:
+
+- props: 15 propnullns, 16 propget: These two tests were a regression
+test on a bug in Apache mod_dav. Because we respond with the correct
+error code (400) to both of these requests, the regression (which
+assumes the bug) breaks. THIS IS THE CORRECT BEHAVIOR.
+- prop: 17 prophighunicode, 18 propget: This tests Plane 1 unicode,
+which JavaScript does not support
+(http://en.wikipedia.org/wiki/Mapping_of_Unicode_character_planes). 
+
+
