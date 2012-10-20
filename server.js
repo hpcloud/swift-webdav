@@ -161,6 +161,13 @@ register
     .does(webdav.backend.LoadResource, 'targetResource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:destination')
+    .does(webdav.backend.LoadLock, 'targetResourceLock')
+      .using('resource').from('cxt:targetResource')
+    // It is okay to copy a locked resource to an unlocked dest.
+    //.does(webdav.backend.CheckLock, 'lockToken')
+    //  .using('lock').from('cxt:lock')
+    .does(webdav.backend.CheckLock, 'destlocktoken') // Check the destination
+      .using('lock').from('cxt:targetResourceLock')
     .does(webdav.http.HandleCopy, 'copy')
       .using('resourceBridge').from('cxt:bridge')
       .using('resource').from('cxt:resource')
