@@ -30,6 +30,9 @@ register
       .using('name').from('cxt:path')
     .does(webdav.backend.LoadLock, 'lock')
       .using('resource').from('cxt:resource')
+    .does(webdav.backend.LoadLock, 'parentLock')
+      .using('resource').from('cxt:resource')
+      .using('parent', true)
   // ================================================================
   // HTTP Operations.
   // ================================================================
@@ -71,6 +74,7 @@ register
     .includes('@loadresource')
     .does(webdav.backend.CheckLock, 'locktoken')
       .using('lock').from('cxt:lock')
+      .using('parentLock').from('cxt:parentLock')
     .does(webdav.http.HandleDelete, 'delete')
       .using('resourceBridge').from('cxt:bridge')
       .using('resource').from('cxt:resource')
@@ -89,6 +93,7 @@ register
     .includes('@loadresource')
     .does(webdav.backend.CheckLock, 'locktoken')
       .using('lock').from('cxt:lock')
+      .using('parentLock').from('cxt:parentLock')
     .does(webdav.http.HandlePut, 'put')
       .using('resourceBridge').from('cxt:bridge')
       .using('path').from('cxt:path')
@@ -122,6 +127,10 @@ register
     .includes('@loadresource')
     .does(webdav.backend.CheckLock, 'locktoken')
       .using('lock').from('cxt:lock')
+      // The spec does not call for this, but Litmus marks it an an error
+      // condition when a parent lock does not restrict a PROPPATCH.
+      // cf. RFC 4918 7.4.
+      .using('parentLock').from('cxt:parentLock')
     .does(webdav.http.HandleProppatch, 'proppatch')
       .using('path').from('cxt:path')
       .using('resource').from('cxt:resource')
@@ -163,11 +172,15 @@ register
       .using('name').from('cxt:destination')
     .does(webdav.backend.LoadLock, 'targetResourceLock')
       .using('resource').from('cxt:targetResource')
+    .does(webdav.backend.LoadLock, 'targetResourceParentLock')
+      .using('resource').from('cxt:targetResource')
+      .using('parent', true)
     // It is okay to copy a locked resource to an unlocked dest.
     //.does(webdav.backend.CheckLock, 'lockToken')
     //  .using('lock').from('cxt:lock')
     .does(webdav.backend.CheckLock, 'destlocktoken') // Check the destination
       .using('lock').from('cxt:targetResourceLock')
+      .using('parentLock').from('cxt:targetResourceParentLock')
     .does(webdav.http.HandleCopy, 'copy')
       .using('resourceBridge').from('cxt:bridge')
       .using('resource').from('cxt:resource')
@@ -185,6 +198,7 @@ register
     .includes('@loadresource')
     .does(webdav.backend.CheckLock, 'locktoken')
       .using('lock').from('cxt:lock')
+      .using('parentLock').from('cxt:parentLock')
     .does(webdav.http.ValidateDestination, 'dest')
     .does(webdav.http.GetNormalizedPath, 'destination')
       .using('path').from('cxt:dest')
@@ -212,6 +226,7 @@ register
       .using('resource').from('cxt:resource')
     .does(webdav.backend.CheckLock, 'locktoken')
       .using('lock').from('cxt:lock')
+      .using('parentLock').from('cxt:parentLock')
     .does(webdav.xml.ParseXML, 'xml')
       .using('input').from('cxt:input')
     .does(webdav.http.HandleLock, 'dolock')
@@ -219,8 +234,9 @@ register
       .using('resourceBridge').from('cxt:bridge')
       .using('baseURI').from('cxt:path')
       .using('xml').from('cxt:xml')
-      .using('lock').from('cxt:lock')
       .using('lockToken').from('cxt:locktoken')
+      .using('lock').from('cxt:lock')
+      .using('parentLock').from('cxt:parentLock')
     .does(webdav.xml.SerializeXML, 'body')
       .using('xml').from('cxt:dolock')
     .does(pronto.commands.HTTPResponse)
