@@ -5,24 +5,35 @@
 var pronto = require('pronto');
 var webdav = require('./lib');
 var fsdav = require('./lib/fs');
-
 var register = new pronto.Registry();
-var initialContext = new pronto.Context({
-  baseURI: '/test'
-});
+
+// Load the settings.
+var settings = webdav.backend.LoadConfig.loadFileSync('./settings.json');
+
+// Initial context is the settings.
+var initialContext = new pronto.Context(settings);
+
+// This should get replaced.
 initialContext.addDatasource('properties', new fsdav.JSONPropStore('./properties.json'));
 initialContext.addDatasource('locks', new fsdav.LockStore());
 
 register
   // Set up the logger
   .logger(pronto.logging.ConsoleLogger, {colors: true})
-  // Operations common across the board.
+  .route('@serverStartup')
+  .route('@serverShutdown')
+  // ================================================================
+  // Operation groups
+  // ================================================================
   .route('@bootstrap')
     .does(webdav.backend.LogAccess, 'accesslog')
-    .does(webdav.http.BasicAuthentication, 'auth')
-      .using('realm', 'Foooo')
+    .does(webdav.hpcloud.GetProjectId, 'projectid')
     .does(webdav.http.GetNormalizedPath, 'path')
       .using('baseURI').from('cxt:baseURI')
+    .does(webdav.hpcloud.BasicAuthentication, 'identity')
+      .using('endpoint').from('cxt:identityService')
+      .using('realm', 'HPCloud')
+      .using('projectId').from('cxt:projectid')
     .does(fsdav.LoadFSBridge, 'bridge')
       .using('root', './data')
       .using('baseURI').from('cxt:baseURI')
@@ -418,5 +429,5 @@ register
 var resolver = new webdav.http.MethodBasedRequestResolver()
 var server = pronto.HTTPServer.createServer(register, initialContext);
 server.setResolver(resolver);
-server.listen(8000, 'localhost');
+server.listen(settings.http.port, settings.http.host);
 process.on('SIGINT', function () {server.close();});
