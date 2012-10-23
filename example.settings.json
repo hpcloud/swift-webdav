@@ -1,0 +1,18 @@
+{
+  "http": {
+    "port": 8000,
+    "host": "localhost",
+    "options": {
+      //"ssl": true
+      //"sslKey": "path/to/key",
+      //"sslCertificate": "path/to/certificate.pem"
+    }
+  },
+  // These are the right ones.
+  //"ssl": true,
+  //"sslKey": "path/to/key",
+  //"sslCertificate": "path/to/certificate.pem",
+
+  "identityService": "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v2.0",
+  "region": "region-a.geo-1"
+}
