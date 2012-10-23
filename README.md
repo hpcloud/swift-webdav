@@ -1,10 +1,13 @@
-# Pronto WebDAV
+# HPCloud WebDAV
 
-A WebDAV library for Pronto.
+A WebDAV library for connecting to HP Cloud services.
+
+This library provides a general WebDAV implementation along with support
+for connecting to HP Cloud.
 
 ## How It Works
 
-Pronto-WebDAV provides two things:
+HPCloud-WebDAV provides two things:
 
 - A complete WebDAV library.
 - A WebDAV server.
@@ -16,21 +19,21 @@ making you own modifications.
 ## Installation
 
 ~~~
-$ cd Pronto-WebDAV
+$ cd HPCloud-WebDAV
 $ npm install
 $ node server.js
 ~~~
 
-## Pronto.js and Pronto-WebDAV
+## Pronto.js and HPCloud-WebDAV
 
-Pronto is an application framework for Node.js. Pronto-WebDAV is built
+Pronto is an application framework for Node.js. HPCloud-WebDAV is built
 for that framework. It assumes the basic model, and is designed to make
 it trivially easy to modify WebDAV behavior using the Pronto
 configuraiton.
 
 ## Extending
 
-Pronto-WebDAV is built to be extended.
+HPCloud-WebDAV is built to be extended.
 
 To add your own backend:
 
@@ -42,7 +45,7 @@ The code in `lib/fs` will get you started.
 ## External Utilities
 
 There are a few command line utilities that can be used for testing
-Pronto-WebDAV:
+HPCloud-WebDAV:
 
 - cadaver: http://www.webdav.org/cadaver/
 - nd: http://gohome.org/nd/
