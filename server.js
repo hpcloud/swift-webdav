@@ -107,6 +107,7 @@ register
 
   .route('PUT')
     .does(pronto.commands.BufferRequest, 'input')
+    .does(webdav.http.KeepConnectionAlive, 'keepalive')
     .includes('@bootstrap')
     .includes('@loadresource')
     .does(webdav.backend.CheckLock, 'locktoken')
