@@ -166,6 +166,7 @@ register
   // 201 or 207, with our without a body.
   .route('MKCOL')
     .includes('@bootstrap')
+    .includes('@loadresource')
     .does(webdav.xml.ParseXML, 'xml')
     .does(webdav.http.HandleMkcol, 'mkcol')
       .using('path').from('cxt:path')
