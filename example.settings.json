@@ -8,6 +8,17 @@
       //"sslCertificate": "path/to/certificate.pem"
     }
   },
+  "memcachedSettings": {
+    // The server name can be either a string for a single server, an array of
+    // servers for a cluster, an object with settings if different servers in
+    // a cluster need to be configured differently. For more details see
+    // https://github.com/3rd-Eden/node-memcached
+    "servers": "localhost",
+
+    // The options to use with the connect. If not specified here the defaults
+    // are used. For more details see https://github.com/3rd-Eden/node-memcached
+    "config": {}
+  },
   // These are the right ones.
   //"ssl": true,
   //"sslKey": "path/to/key",

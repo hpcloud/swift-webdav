@@ -21,6 +21,8 @@ register
   // Set up the logger
   .logger(pronto.logging.ConsoleLogger, {colors: true})
   .route('@serverStartup')
+    .does(webdav.cache.setupMemcached, 'authcache')
+      .using('settings').from('cxt:memcachedSettings')
   .route('@serverShutdown')
   // ================================================================
   // Operation groups
