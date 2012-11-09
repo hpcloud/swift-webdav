@@ -17,7 +17,11 @@
 
     // The options to use with the connect. If not specified here the defaults
     // are used. For more details see https://github.com/3rd-Eden/node-memcached
-    "config": {}
+    "config": {
+      "retries": 0,
+      "reconnect": 30000,
+      "timeout": 500
+    }
   },
   // These are the right ones.
   //"ssl": true,
