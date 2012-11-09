@@ -13,7 +13,7 @@
     // servers for a cluster, an object with settings if different servers in
     // a cluster need to be configured differently. For more details see
     // https://github.com/3rd-Eden/node-memcached
-    "servers": "localhost",
+    "servers": "127.0.0.1:11211",
 
     // The options to use with the connect. If not specified here the defaults
     // are used. For more details see https://github.com/3rd-Eden/node-memcached
