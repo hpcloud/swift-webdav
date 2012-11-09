@@ -7,29 +7,39 @@ for connecting to HP Cloud.
 
 ## How It Works
 
-HPCloud-WebDAV provides two things:
+HPCloud-WebDAV provides three things:
 
 - A complete WebDAV library.
 - A WebDAV server.
+- An OpenStack Swift backend (and a file system backend for testing)
 
-The library can be used to build your own WebDAV servers, while the
-included server shows how you can quickly assemble a WebDAV server,
-making you own modifications.
+The library is built to make it easy to add a custom backend.
 
 ## Installation
 
 ~~~
 $ cd HPCloud-WebDAV
 $ npm install
+$ cp example.settings.json settings.json
+$ edit settings.json
 $ node server.js
 ~~~
+
+*Memcached Support:*
+
+Memcached can be used to cache authentication credentials.
+
+- Install and start Memcached.
+- Configure the parameters in `settings.json`
 
 ## Pronto.js and HPCloud-WebDAV
 
 Pronto is an application framework for Node.js. HPCloud-WebDAV is built
 for that framework. It assumes the basic model, and is designed to make
 it trivially easy to modify WebDAV behavior using the Pronto
-configuraiton.
+configuration.
+
+Start with the `server.js` file.
 
 ## Extending
 
