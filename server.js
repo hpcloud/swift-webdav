@@ -23,6 +23,8 @@ register
   .route('@serverStartup')
     .does(webdav.cache.setupMemcached, 'authcache')
       .using('settings').from('cxt:memcachedSettings')
+      // name here adds the cache as a datasouce with that name.
+      .using('name', 'memcached')
   .route('@serverShutdown')
   // ================================================================
   // Operation groups
@@ -36,6 +38,7 @@ register
       .using('endpoint').from('cxt:identityService')
       .using('realm', 'HPCloud')
       .using('projectId').from('cxt:projectid')
+      .using('cache').from('cxt:authcache')
     .does(webdav.hpcloud.LoadSwiftBridge, 'bridge')
       .using('endpoint').from('cxt:identityService')
       .using('identity').from('cxt:identity')
