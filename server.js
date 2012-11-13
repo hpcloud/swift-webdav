@@ -211,7 +211,7 @@ register
     //  .using('lock').from('cxt:lock')
     .does(webdav.backend.CheckLock, 'destlocktoken') // Check the destination
       .using('resource').from('cxt:targetResource')
-      .using('parentResource').from('cxt:targetParentResource')
+      .using('parent').from('cxt:targetParentResource')
     .does(webdav.http.HandleCopy, 'copy')
       .using('resourceBridge').from('cxt:bridge')
       .using('resource').from('cxt:resource')
@@ -245,7 +245,7 @@ register
       .using('name').from('cxt:targetParentPath')
     .does(webdav.backend.CheckLock, 'destlocktoken') // Check the destination
       .using('resource').from('cxt:targetResource')
-      .using('parentResource').from('cxt:targetParentResource')
+      .using('parent').from('cxt:targetParentResource')
     // END check locks on the destination.
     .does(webdav.http.HandleMove, 'move')
       .using('resourceBridge').from('cxt:bridge')
