@@ -152,8 +152,8 @@ register
       .using('body').from('cxt:body')
 
   .route('PROPPATCH')
-    .includes('@bootstrap')
     .does(webdav.xml.ParseXML, 'xml')
+    .includes('@bootstrap')
     .includes('@write')
     .does(webdav.backend.CheckLock, 'locktoken')
       .using('resource').from('cxt:resource')
