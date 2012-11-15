@@ -17,6 +17,8 @@ The library is built to make it easy to add a custom backend.
 
 ## Installation
 
+Short version:
+
 ~~~
 $ cd HPCloud-WebDAV
 $ npm install
@@ -25,12 +27,34 @@ $ edit settings.json
 $ node server.js
 ~~~
 
-*Memcached Support:*
+Detailed version:
 
-Memcached can be used to cache authentication credentials.
+1. Clone the HPCloud-JS repository from GitHub Enterprise:
+   `git clone https://git.hpcloud.net/butchema/HPCloud-JS`
+2. Clone the HPCloud-WebDAV repository from GitHub Enterprise:
+   `git clone https://git.hpcloud.net/butchema/HPCloud-WebDAV`
+3. Install Node.JS. On Ubuntu Linux, you can install with:
+   `sudo apt-get install nodejs`
+4. Install NPM. On Ubuntu Linux, you can install with:
+   `sudo apt-get install npm`
+5. Install Memcached. On Ubuntu Linux you can install that with:
+   `sudo apt-get install memcached` (Make sure memcached starts.)
+6. At a commandline, change directories into the HPCloud-WebDAV
+   directory: `cd HPCloud-WebDAV`
+7. Using NPM, install HPCloud-JS as a node module:
+   `npm install -f path/to/HPCloud-JS`
+8. Now run `npm install`. This will install additional dependencies,
+   including Pronto.js, a memcached client, and several supporting
+   libraries.
+9. Create a settings file. The easiest way to do this is:
+   `cp example.settings.json settings.json && edit settings.json`
+10. Start the WebDAV server: `node server.js`.
 
-- Install and start Memcached.
-- Configure the parameters in `settings.json`
+You will now have a sing WebDAV server. By default, it is listening on
+`localhost:8000`, though you can change that in the settings.
+
+You may now use any supported WebDAV client to connect to the service.
+(see [doc/](doc/) for examples.)
 
 ## Pronto.js and HPCloud-WebDAV
 
