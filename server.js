@@ -1,7 +1,7 @@
 /**
  * A simple WebDAV server.
  */
-
+var fs = require('fs');
 var pronto = require('pronto');
 var webdav = require('./lib');
 var fsdav = require('./lib/fs');
@@ -12,6 +12,13 @@ var settings = webdav.backend.LoadConfig.loadFileSync('./settings.json');
 
 // Initial context is the settings.
 var initialContext = new pronto.Context(settings);
+
+// Setup SSL if enabled.
+if (settings.http.ssl = true) {
+  initialContext.add('ssl', true);
+  initialContext.add('sslKey', fs.readFileSync(settings.http.options.sslKey));
+  initialContext.add('sslCertificate', fs.readFileSync(settings.http.options.sslCertificate));
+}
 
 // This should get replaced.
 initialContext.addDatasource('properties', new fsdav.JSONPropStore('./properties.json'));
