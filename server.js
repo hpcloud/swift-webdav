@@ -141,6 +141,8 @@ register
       .using('code', 404).from('cxt:put')
 
   .route('PROPFIND')
+    .does(webdav.http.PropfindMacHack, 'pmh')
+      .using('path').from('cxt:path')
     .does(webdav.xml.ParseXML, 'xml')
     .includes('@bootstrap')
       // XXX: Currently, we're not buffering this.
