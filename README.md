@@ -21,7 +21,6 @@ Short version:
 
 ~~~
 $ cd HPCloud-WebDAV
-$ npm install
 $ cp example.settings.json settings.json
 $ edit settings.json
 $ node server.js
@@ -41,9 +40,9 @@ Detailed version:
    `sudo apt-get install memcached` (Make sure memcached starts.)
 6. At a commandline, change directories into the HPCloud-WebDAV
    directory: `cd HPCloud-WebDAV`
-7. Using NPM, install HPCloud-JS as a node module:
+7. NO LONGER NECESSARY. Using NPM, install HPCloud-JS as a node module:
    `npm install -f path/to/HPCloud-JS`
-8. Now run `npm install`. This will install additional dependencies,
+8. NO LONGER NECESSARY. Now run `npm install`. This will install additional dependencies,
    including Pronto.js, a memcached client, and several supporting
    libraries.
 9. Create a settings file. The easiest way to do this is:
