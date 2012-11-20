@@ -215,6 +215,7 @@ IdentityServices.prototype.tenants = function (identity, fn) {
     var json;
     if (e) {
       fn(e);
+      return;
     }
 
 
