@@ -23,6 +23,7 @@
       "timeout": 500
     }
   },
+  "log": ["warning", "error", "fatal", "info", "custom", "access"],
 
   "identityService": "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v2.0",
   "region": "region-a.geo-1"
