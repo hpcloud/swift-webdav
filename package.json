@@ -2,7 +2,7 @@
   "name": "pronto-webdav",
   "description": "A Generic WebDAV Gateway",
   "keywords": ["webdav", "http", "pronto"],
-  "version": "0.0.1",
+  "version": "0.0.4",
   "author": "Matt Butcher <matthew.butcher@hp.com>",
   "contributors": [
     {"name": "Matt Butcher", "email": "matthew.butcher@hp.com"},
