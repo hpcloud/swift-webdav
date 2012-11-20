@@ -26,7 +26,7 @@ initialContext.addDatasource('properties', new fsdav.JSONPropStore('./properties
 
 register
   // Set up the logger
-  .logger(pronto.logging.ConsoleLogger, {colors: true})
+  .logger(pronto.logging.ConsoleLogger, {colors: true, facilities: settings.log})
   .route('@serverStartup')
     .does(webdav.cache.setupMemcached, 'authcache')
       .using('settings').from('cxt:memcachedSettings')
