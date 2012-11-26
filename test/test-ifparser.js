@@ -161,3 +161,20 @@ new IfQueue('<urn>(<foo>["etag"])').parse(function (e, queue) {
 new IfQueue('</ref <urn:uri:eieio> ["etag"])>').parse(function (e, queue) {
   assert.ok(e instanceof Error);
 });
+
+
+new IfQueue('(Not ["etag1"] ["etag2"] <stateTag>)').parse(function (e, queue) {
+  if (e) {
+    console.log(e);
+    return;
+  }
+  console.log(queue);
+  assert.equal('startList', queue[0].event);
+  assert.equal('not', queue[1].event);
+  assert.equal('eTag', queue[2].event);
+  assert.equal('"etag1"', queue[2].args[0]);
+  assert.equal('eTag', queue[3].event);
+  assert.equal('"etag2"', queue[3].args[0]);
+  assert.equal('stateToken', queue[4].event);
+  assert.equal('endList', queue[5].event);
+});
