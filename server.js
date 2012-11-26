@@ -14,7 +14,7 @@ var settings = webdav.backend.LoadConfig.loadFileSync('./settings.json');
 var initialContext = new pronto.Context(settings);
 
 // Setup SSL if enabled.
-if (settings.http.ssl = true) {
+if (settings.http.ssl === true) {
   initialContext.add('ssl', true);
   initialContext.add('sslKey', fs.readFileSync(settings.http.options.sslKey));
   initialContext.add('sslCertificate', fs.readFileSync(settings.http.options.sslCertificate));
