@@ -163,7 +163,7 @@ new IfQueue('</ref <urn:uri:eieio> ["etag"])>').parse(function (e, queue) {
 });
 
 
-new IfQueue('(Not ["etag1"] ["etag2"] <stateTag>)').parse(function (e, queue) {
+new IfQueue('(Not ["etag1"] [W/"etag2"] <stateTag>)').parse(function (e, queue) {
   if (e) {
     console.log(e);
     return;
@@ -174,7 +174,93 @@ new IfQueue('(Not ["etag1"] ["etag2"] <stateTag>)').parse(function (e, queue) {
   assert.equal('eTag', queue[2].event);
   assert.equal('"etag1"', queue[2].args[0]);
   assert.equal('eTag', queue[3].event);
-  assert.equal('"etag2"', queue[3].args[0]);
+  assert.equal('W/"etag2"', queue[3].args[0]);
   assert.equal('stateToken', queue[4].event);
   assert.equal('endList', queue[5].event);
+});
+
+
+new IfQueue('(Not ["etag1"] [W/"etag2"] <stateTag>) (<anotherTag>)').parse(function (e, queue) {
+  if (e) {
+    console.log(e);
+    return;
+  }
+  console.log(queue);
+  assert.equal('startList', queue[0].event);
+  assert.equal('not', queue[1].event);
+  assert.equal('eTag', queue[2].event);
+  assert.equal('eTag', queue[3].event);
+  assert.equal('stateToken', queue[4].event);
+  assert.equal('endList', queue[5].event);
+  assert.equal('startList', queue[6].event);
+  assert.equal('stateToken', queue[7].event);
+  assert.equal('endList', queue[8].event);
+});
+
+new IfQueue('(<test>) ([test]').parse(function (e, queue) {
+  assert.ok(e instanceof Error);
+});
+new IfQueue('(<test> ([test])').parse(function (e, queue) {
+  assert.ok(e instanceof Error);
+});
+
+
+new IfQueue('(<a>)(<b>)(<c>)(Not <d>)').parse(function (e, queue) {
+  if (e) {
+    console.log(e);
+    return;
+  }
+  console.log(queue);
+  assert.equal(queue.length, 13);
+});
+
+new IfQueue('<urn>(<foo>["etag"])(["foooo"])').parse(function (e, queue) {
+  if (e) {
+    console.log(e);
+  }
+  console.log(queue);
+  assert.equal('resourceTag', queue[0].event);
+  assert.equal('urn', queue[0].args[0]);
+
+  assert.equal('startList', queue[1].event);
+  assert.equal('stateToken', queue[2].event);
+  assert.equal('eTag', queue[3].event);
+  assert.equal('endList', queue[4].event);
+  assert.equal('startList', queue[5].event);
+  assert.equal('eTag', queue[6].event);
+  assert.equal('endList', queue[7].event);
+});
+
+new IfQueue('  <urn>    (<foo>    ["etag"]   )    (   ["foooo"]   )  ').parse(function (e, queue) {
+  if (e) {
+    console.log(e);
+  }
+  console.log(queue);
+  assert.equal('resourceTag', queue[0].event);
+  assert.equal('urn', queue[0].args[0]);
+
+  assert.equal('startList', queue[1].event);
+  assert.equal('stateToken', queue[2].event);
+  assert.equal('eTag', queue[3].event);
+  assert.equal('endList', queue[4].event);
+  assert.equal('startList', queue[5].event);
+  assert.equal('eTag', queue[6].event);
+  assert.equal('endList', queue[7].event);
+});
+
+
+new IfQueue('<urn> (<foo>["etag"]) <urn2> (["foooo"])').parse(function (e, queue) {
+  if (e) {
+    console.log(e);
+  }
+  console.log(queue);
+  assert.equal('resourceTag', queue[0].event);
+  assert.equal('startList', queue[1].event);
+  assert.equal('stateToken', queue[2].event);
+  assert.equal('eTag', queue[3].event);
+  assert.equal('endList', queue[4].event);
+  assert.equal('resourceTag', queue[5].event);
+  assert.equal('startList', queue[6].event);
+  assert.equal('eTag', queue[7].event);
+  assert.equal('endList', queue[8].event);
 });
