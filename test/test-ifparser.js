@@ -1,5 +1,5 @@
 var assert = require('assert');
-var IfParser = require('../lib/http/ifparser');
+var IfParser = require('../lib/backend/ifparser');
 
 function IfQueue(rule){
   var p = new IfParser(rule);
@@ -37,7 +37,7 @@ IfQueue.prototype.parse = function (fn) {
     fn(false, q);
   });
   this.p.on('error', function (e) {
-    console.log("Error! %s", e.message);
+    //console.log("Error! %s", e.message);
     fn(e);
   });
 

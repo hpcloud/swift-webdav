@@ -1,4 +1,4 @@
-var IfRules = require('../lib/http/ifrules');
+var IfRules = require('../lib/backend/ifrules');
 var assert = require('assert');
 
 var headers = {
