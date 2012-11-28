@@ -27,3 +27,12 @@ your object storage account.
 requests to the remote server before displaying the contents of a
 folder. For this reason, initial loading of a WebDAV volume will be
 slow. 
+
+## Performance
+
+OS X writes `.DS_Store` files to every directory it reads. This can be
+extremely time consuming on WebDAV volumes.
+
+Reports suggest that this behavior can be altered
+See [this reference](http://plone.org/documentation/faq/mac-os-x-ds-store-files-webdav)
+for details.
