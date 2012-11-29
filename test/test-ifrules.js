@@ -94,7 +94,8 @@ new IfRules('<resource/> (["abc"])').evaluate(mockres, function (e, token) {
   if (e) {
     throw e;
   }
-  assert.equal(token, 'locktoken');
+  //assert.equal(token, 'locktoken');
+  assert.ok(!token);
 });
 
 new IfRules('(<locktoken> ["abc"])').evaluate(mockres, function (e, token) {
@@ -115,7 +116,8 @@ new IfRules('(Not <nolocktoken>)').evaluate(mockres, function (e, token) {
   if (e) {
     throw e;
   }
-  assert.equal(token, 'locktoken');
+  //assert.equal(token, 'locktoken');
+  assert.ok(!token);
 });
 
 new IfRules('(<nolocktoken>)').evaluate(mockres, function (e, token) {
@@ -169,3 +171,16 @@ new IfRules('<resource/> (<locktoken>) <resource2/> (["monkey"])').evaluate(mock
 new IfRules('<resource/> (<locktoken>) <resource2/> (["monkey2"])').evaluate(mockres, function (e, token) {
   assert.equal(e.status, 412);
 });
+
+// Litmus locks: 18
+new IfRules('(<notoken>) (Not <DAV:no-lock>)').evaluate(mockres, function (e, token) {
+  //assert.equal(e.status, 412);
+  assert.equal(token, 'notoken');
+});
+
+
+// Litmus locks: 22
+new IfRules('(<DAV:no-lock>)').evaluate(mockres, function (e, token) {
+  assert.equal(e.status, 412);
+});
+
