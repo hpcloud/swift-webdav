@@ -30,9 +30,18 @@ slow.
 
 ## Performance
 
+### .DS_Store files
+
 OS X writes `.DS_Store` files to every directory it reads. This can be
 extremely time consuming on WebDAV volumes.
 
 Reports suggest that this behavior can be altered
 See [this reference](http://plone.org/documentation/faq/mac-os-x-ds-store-files-webdav)
 for details.
+
+### Versioning
+
+Many Mac apps, including those supplied with OS X, attempt to store
+versioning information about files. The method they use is proprietary.
+
+
