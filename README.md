@@ -98,6 +98,8 @@ that do not pass. These are explained below.
 
 Currently, the following Litmus tests fail:
 
+#### Properties Tests
+
 - props: 15 propnullns, 16 propget: These two tests were a regression
 test on a bug in Apache mod_dav. Because we respond with the correct
 error code (400) to both of these requests, the regression (which
@@ -106,4 +108,9 @@ assumes the bug) breaks. THIS IS THE CORRECT BEHAVIOR.
 which JavaScript does not support
 (http://en.wikipedia.org/wiki/Mapping_of_Unicode_character_planes). 
 
+### Locks Tests
 
+- locks 23-30: We do not implement the OPTIONAL shared locks portion of
+RFC-4918. So these tests are skipped by Litmus.
+- locks 33: Some versions of Litmus fail test 33 because of a bug in
+Litmus. It fails to send an If header for a locked resource.
