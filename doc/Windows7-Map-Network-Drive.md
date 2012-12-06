@@ -37,3 +37,9 @@ but can be easily sped up.
 To improve performance:
 
 http://owncloud.org/support/webdav/
+
+## Windows and WebDAV References
+
+Basic summary of configuration of Windows WebDAV: http://owncloud.org/support/webdav/
+
+Known issues by version: http://greenbytes.de/tech/webdav/webdav-redirector-list.html
