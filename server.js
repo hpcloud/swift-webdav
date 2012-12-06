@@ -60,21 +60,26 @@ register
     .does(webdav.backend.LoadResource, 'resource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:path')
+      .using('skipBody', false).from('cxt:skipBody')
 
   // WRITE operations should all have this.
   .route('@write')
     .does(webdav.backend.LoadResource, 'resource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:path')
+      .using('skipBody', false).from('cxt:skipBody')
     .does(webdav.backend.ParentName, 'parentPath')
       .using('path').from('cxt:path')
     .does(webdav.backend.LoadResource, 'parentResource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:parentPath')
+      .using('skipBody', false).from('cxt:parentSkipBody')
   // ================================================================
   // HTTP Operations.
   // ================================================================
   .route('OPTIONS')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
     .includes('@bootstrap')
     .includes('@read')
     .does(webdav.http.HandleOptions, 'options')
@@ -97,6 +102,7 @@ register
       .using('stream').from('resource:stream')
 
   .route('HEAD')
+    .does(pronto.commands.AddToContext, 'atc').using('skipBody', true)
     .includes('@bootstrap')
     .includes('@read')
     .does(webdav.http.HandleHead, 'head')
@@ -106,6 +112,9 @@ register
       .using('code', 404).from('cxt:head')
 
   .route('DELETE')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
+      .using('parentSkipBody', true)
     .includes('@bootstrap')
     .includes('@write')
     .does(webdav.backend.CheckLock, 'locktoken')
@@ -141,6 +150,7 @@ register
       .using('code', 404).from('cxt:put')
 
   .route('PROPFIND')
+    .does(pronto.commands.AddToContext, 'atc').using('skipBody', true)
     .does(webdav.http.PropfindMacHack, 'pmh')
       .using('path').from('cxt:path')
     .does(webdav.xml.ParseXML, 'xml')
@@ -161,6 +171,9 @@ register
       .using('body').from('cxt:body')
 
   .route('PROPPATCH')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
+      .using('parentSkipBody', true)
     .does(webdav.xml.ParseXML, 'xml')
     .includes('@bootstrap')
     .includes('@write')
@@ -185,6 +198,9 @@ register
   // Since we support extended-mkcol, this can return
   // 201 or 207, with our without a body.
   .route('MKCOL')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
+      .using('parentSkipBody', true)
     .includes('@bootstrap')
     .includes('@write')
     .does(webdav.xml.ParseXML, 'xml')
@@ -201,6 +217,9 @@ register
       .using('body').from('cxt:body')
 
   .route('COPY')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
+      .using('parentSkipBody', true)
     .includes('@bootstrap')
     .includes('@write')
     .does(webdav.http.ValidateDestination, 'dest')
@@ -210,6 +229,7 @@ register
     .does(webdav.backend.LoadResource, 'targetResource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:destination')
+      .using('skipBody', true)
     .does(webdav.backend.ParentName, 'targetParentPath')
       .using('path').from('cxt:destination')
     .does(webdav.backend.LoadResource, 'targetParentResource')
@@ -234,6 +254,9 @@ register
       .using('body').from('cxt:body')
 
   .route('MOVE')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
+      .using('parentSkipBody', true)
     .includes('@bootstrap')
     .includes('@write')
     .does(webdav.backend.CheckLock, 'locktoken')
@@ -269,6 +292,9 @@ register
       .using('body').from('cxt:body')
 
   .route('LOCK')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
+      .using('parentSkipBody', true)
     .does(pronto.commands.BufferRequest, 'input')
     .includes('@bootstrap')
     .includes('@write')
@@ -298,6 +324,9 @@ register
       .using('body').from('cxt:body')
 
   .route('UNLOCK')
+    .does(pronto.commands.AddToContext, 'atc')
+      .using('skipBody', true)
+      .using('parentSkipBody', true)
     .includes('@bootstrap')
     .includes('@write')
     .does(webdav.backend.CheckLock, 'locktoken')
