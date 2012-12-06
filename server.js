@@ -235,6 +235,7 @@ register
     .does(webdav.backend.LoadResource, 'targetParentResource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:targetParentPath')
+      .using('skipBody', true)
     // It is okay to copy a locked resource to an unlocked dest.
     //.does(webdav.backend.CheckLock, 'lockToken')
     //  .using('lock').from('cxt:lock')
@@ -269,12 +270,14 @@ register
     .does(webdav.backend.LoadResource, 'targetResource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:destination')
+      .using('skipBody', true)
     // BEGIN check locks on the destination.
     .does(webdav.backend.ParentName, 'targetParentPath')
       .using('path').from('cxt:destination')
     .does(webdav.backend.LoadResource, 'targetParentResource')
       .using('resourceBridge').from('cxt:bridge')
       .using('name').from('cxt:targetParentPath')
+      .using('skipBody', true)
     .does(webdav.backend.CheckLock, 'destlocktoken') // Check the destination
       .using('resource').from('cxt:targetResource')
       .using('parent').from('cxt:targetParentResource')
