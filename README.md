@@ -20,6 +20,7 @@ The library is built to make it easy to add a custom backend.
 Short version:
 
 ~~~
+$ sudo apt-get intall nodejs npm memcached libcap2-bin
 $ cd HPCloud-WebDAV
 $ cp example.settings.json settings.json
 $ edit settings.json
@@ -55,6 +56,15 @@ You will now have a sing WebDAV server. By default, it is listening on
 You may now use any supported WebDAV client to connect to the service.
 (see [doc/](doc/) for examples.)
 
+### Installation on a Server
+
+To install on a server (running on port 443), the following additional
+steps should be done:
+
+* Install `libcap2-bin`: `sudo apt-get install libcap2-bin`
+* Allow Node.js to bind to low ports: `sudo setcap cap_net_bind_service=+ep node`
+* Run as a non-privileged user: `node server.js` 
+ 
 ## Pronto.js and HPCloud-WebDAV
 
 Pronto is an application framework for Node.js. HPCloud-WebDAV is built
