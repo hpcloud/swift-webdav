@@ -47,7 +47,7 @@ Transport.doRequest = function(opts, body, fn) {
       });
     }
     else {
-      console.log("FAILED with HTTP status code %d", response.statusCode);
+      // console.log("FAILED with HTTP status code %d", response.statusCode);
       var e = new Error('HTTP Error ' + response.statusCode);
       e.statusCode = response.statusCode;
       fn(e);
@@ -56,7 +56,7 @@ Transport.doRequest = function(opts, body, fn) {
 
   // FIXME: Use better error handling.
   req.on('error', function (e) {
-    console.log('FAILED outside of HTTP: ' + e.message);
+    // console.log('FAILED outside of HTTP: ' + e.message);
     var err = new Error('Non-HTTP error: ' + e.message);
     err.statusCode = 0;
     fn(err);
