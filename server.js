@@ -6,6 +6,7 @@ var pronto = require('pronto');
 var webdav = require('./lib');
 var fsdav = require('./lib/fs');
 var register = new pronto.Registry();
+var Syslogger = require('./lib/backend/syslogger');
 
 // Load the settings.
 var settings = webdav.backend.LoadConfig.loadFileSync('./settings.json');
@@ -26,7 +27,8 @@ initialContext.addDatasource('properties', new fsdav.JSONPropStore('./properties
 
 register
   // Set up the logger
-  .logger(pronto.logging.ConsoleLogger, {colors: true, facilities: settings.log})
+  //.logger(pronto.logging.ConsoleLogger, {colors: true, facilities: settings.log})
+  .logger(Syslogger, {priorities: settings.log, facility: "local4"})
   .route('@serverStartup')
     .does(webdav.cache.setupMemcached, 'authcache')
       .using('settings').from('cxt:memcachedSettings')
