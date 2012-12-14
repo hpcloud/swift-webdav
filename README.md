@@ -62,7 +62,7 @@ To install on a server (running on port 443), the following additional
 steps should be done:
 
 * Install `libcap2-bin`: `sudo apt-get install libcap2-bin`
-* Allow Node.js to bind to low ports: `sudo setcap cap_net_bind_service=+ep node`
+* Allow Node.js to bind to low ports: `sudo setcap cap_net_bind_service=+ep /usr/bin/node`
 * Run as a non-privileged user: `node server.js` 
  
 ## Pronto.js and HPCloud-WebDAV
