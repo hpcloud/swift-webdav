@@ -9,7 +9,9 @@ var register = new pronto.Registry();
 var Syslogger = require('./lib/backend/syslogger');
 
 // Load the settings.
-var settings = webdav.backend.LoadConfig.loadFileSync('./settings.json');
+var settingsFile = process.argv[2] || './settings.json';
+console.log("Settings: %s", settingsFile);
+var settings = webdav.backend.LoadConfig.loadFileSync(settingsFile);
 
 // Initial context is the settings.
 var initialContext = new pronto.Context(settings);
@@ -20,10 +22,6 @@ if (settings.http.ssl === true) {
   initialContext.add('sslKey', fs.readFileSync(settings.http.options.sslKey));
   initialContext.add('sslCertificate', fs.readFileSync(settings.http.options.sslCertificate));
 }
-
-// This should get replaced.
-initialContext.addDatasource('properties', new fsdav.JSONPropStore('./properties.json'));
-//initialContext.addDatasource('locks', new fsdav.LockStore());
 
 register
   // Set up the logger
