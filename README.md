@@ -30,25 +30,20 @@ $ node server.js
 Detailed version:
 
 1. Clone the HPCloud-JS repository from GitHub Enterprise:
-   `git clone https://git.hpcloud.net/butchema/HPCloud-JS`
+   `git clone https://git.hpcloud.net/butchema/hpcloud-js`
 2. Clone the HPCloud-WebDAV repository from GitHub Enterprise:
-   `git clone https://git.hpcloud.net/butchema/HPCloud-WebDAV`
+   `git clone https://git.hpcloud.net/butchema/hpcloud-webdav`
 3. Install Node.JS. On Ubuntu Linux, you can install with:
    `sudo apt-get install nodejs`
-4. Install NPM. On Ubuntu Linux, you can install with:
+4. (ONLY FOR DEVS) Install NPM. On Ubuntu Linux, you can install with:
    `sudo apt-get install npm`
 5. Install Memcached. On Ubuntu Linux you can install that with:
    `sudo apt-get install memcached` (Make sure memcached starts.)
 6. At a commandline, change directories into the HPCloud-WebDAV
-   directory: `cd HPCloud-WebDAV`
-7. NO LONGER NECESSARY. Using NPM, install HPCloud-JS as a node module:
-   `npm install -f path/to/HPCloud-JS`
-8. NO LONGER NECESSARY. Now run `npm install`. This will install additional dependencies,
-   including Pronto.js, a memcached client, and several supporting
-   libraries.
-9. Create a settings file. The easiest way to do this is:
+   directory: `cd hpcloud-webdav`
+7. Create a settings file. The easiest way to do this is:
    `cp example.settings.json settings.json && edit settings.json`
-10. Start the WebDAV server: `node server.js`.
+8. Start the WebDAV server: `node server.js`.
 
 You will now have a sing WebDAV server. By default, it is listening on
 `localhost:8000`, though you can change that in the settings.
@@ -64,6 +59,8 @@ steps should be done:
 * Install `libcap2-bin`: `sudo apt-get install libcap2-bin`
 * Allow Node.js to bind to low ports: `sudo setcap cap_net_bind_service=+ep /usr/bin/node`
 * Run as a non-privileged user: `node server.js` 
+
+**DO NOT** install `npm` on a production system.
  
 ## Pronto.js and HPCloud-WebDAV
 
