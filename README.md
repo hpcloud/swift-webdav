@@ -58,9 +58,21 @@ steps should be done:
 
 * Install `libcap2-bin`: `sudo apt-get install libcap2-bin`
 * Allow Node.js to bind to low ports: `sudo setcap cap_net_bind_service=+ep /usr/bin/node`
-* Run as a non-privileged user: `node server.js` 
+* Run as a non-privileged user: `node server.js path/to/settings.json` 
 
 **DO NOT** install `npm` on a production system.
+
+## Running with Forever.js
+
+```
+forever start path/to/server.js path/to/settings.json
+```
+
+## Running with the start/stop daemon
+
+```
+$ bin/hpcloud-webdav start
+```
  
 ## Pronto.js and HPCloud-WebDAV
 

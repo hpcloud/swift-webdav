@@ -10,7 +10,6 @@ var Syslogger = require('./lib/backend/syslogger');
 
 // Load the settings.
 var settingsFile = process.argv[2] || './settings.json';
-console.log("Settings: %s", settingsFile);
 var settings = webdav.backend.LoadConfig.loadFileSync(settingsFile);
 
 // Initial context is the settings.
