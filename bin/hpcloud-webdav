@@ -17,7 +17,8 @@ MAINSCRIPT=$BASEDIR/server.js
 CONFIG=$BASEDIR/settings.json
 FOREVER=$BASEDIR/node_modules/forever/bin/forever
 
-LOGDIR=/var/log
+#LOGDIR=/var/log
+LOGDIR=/tmp
 
 DESC=hpcloud-webdav
 
@@ -33,6 +34,7 @@ case "$1" in
     #start-stop-daemon --start --quiet --exec $CMD
     # Start the server, appending logs to the locations given.
     $FOREVER start -a -l $LOGDIR/forever.log -o $LOGDIR/forever.stdout.log -e $LOGDIR/forever.stderr.log $MAINSCRIPT $CONFIG
+    # $FOREVER start -a -s -l $LOGDIR/forever.log $MAINSCRIPT $CONFIG
     ;;
   stop)
     echo -n "Stopping $DESC"

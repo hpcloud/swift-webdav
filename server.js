@@ -2,11 +2,15 @@
  * A simple WebDAV server.
  */
 var fs = require('fs');
+var Path = require('path');
 var pronto = require('pronto');
 var webdav = require('./lib');
 var fsdav = require('./lib/fs');
 var register = new pronto.Registry();
 var Syslogger = require('./lib/backend/syslogger');
+
+// Source code base directory.
+var here = Path.dirname(process.argv[1]);
 
 // Load the settings.
 var settingsFile = process.argv[2] || './settings.json';
@@ -18,8 +22,10 @@ var initialContext = new pronto.Context(settings);
 // Setup SSL if enabled.
 if (settings.http.ssl === true) {
   initialContext.add('ssl', true);
-  initialContext.add('sslKey', fs.readFileSync(settings.http.options.sslKey));
-  initialContext.add('sslCertificate', fs.readFileSync(settings.http.options.sslCertificate));
+  var key = Path.resolve(here, settings.http.options.sslKey);
+  var cert = Path.resolve(here, settings.http.options.sslCertificate);
+  initialContext.add('sslKey', fs.readFileSync(key));
+  initialContext.add('sslCertificate', fs.readFileSync(cert));
 }
 
 register
