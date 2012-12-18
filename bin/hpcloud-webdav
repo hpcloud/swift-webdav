@@ -12,8 +12,13 @@
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-MAINSCRIPT=/opt/hpcloud-webdav/server.js
-DAEMONNAME=hpcloud-webdav
+BASEDIR=/opt/hpcloud-webdav
+MAINSCRIPT=$BASEDIR/server.js
+CONFIG=$BASEDIR/settings.json
+FOREVER=$BASEDIR/node_modules/forever/bin/forever
+
+LOGDIR=/var/log
+
 DESC=hpcloud-webdav
 
 CMD="/usr/bin/node $MAINSCRIPT"
@@ -25,19 +30,23 @@ set -e
 case "$1" in
   start)
     echo -n "Starting $DESC"
-    start-stop-daemon --start --quiet --exec $CMD
+    #start-stop-daemon --start --quiet --exec $CMD
+    # Start the server, appending logs to the locations given.
+    $FOREVER start -a -l $LOGDIR/forever.log -o $LOGDIR/forever.stdout.log -e $LOGDIR/forever.stderr.log $MAINSCRIPT $CONFIG
     ;;
   stop)
     echo -n "Stopping $DESC"
-    start-stop-daemon --stop--quiet --oknodo --retry 5 --pidfile $PIDFILE --exec $CMD
+    #start-stop-daemon --stop--quiet --oknodo --retry 5 --pidfile $PIDFILE --exec $CMD
+    $FOREVER stop $MAINSCRIPT
     ;;
   restart|force-reload)
     echo -n "Restarting $DESC"
-    start-stop-daemon --stop--quiet --oknodo --retry 5 --pidfile $PIDFILE --exec $CMD
-    start-stop-daemon --start --quiet --exec $CMD
+    #start-stop-daemon --stop--quiet --oknodo --retry 5 --pidfile $PIDFILE --exec $CMD
+    #start-stop-daemon --start --quiet --exec $CMD
+    $FOREVER restart $MAINSCRIPT
     ;;
   status)
-    echo -n "It is running, or maybe not."
+    $FOREVER list
     ;;
   *)
     echo "Usage: hpcloud-webdav {start|stop|restart|status}" >&2
