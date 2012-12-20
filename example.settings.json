@@ -25,6 +25,10 @@
   },
   "log": ["warning", "error", "fatal", "info", "custom", "access"],
 
+  // Whitelist of users allowed on the beta.
+  //"betaUsers": { "matthew.butcher@hp.com": true },
+
   "identityService": "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v2.0",
   "region": "region-a.geo-1"
+
 }

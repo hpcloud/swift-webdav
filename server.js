@@ -9,6 +9,9 @@ var fsdav = require('./lib/fs');
 var register = new pronto.Registry();
 var Syslogger = require('./lib/backend/syslogger');
 
+// For blocking users who aren't in the beta.
+var BetaBlocker = require('./lib/hpcloud/betablocker');
+
 // Source code base directory.
 var here = Path.dirname(process.argv[1]);
 
@@ -51,6 +54,9 @@ register
       .using('realm', 'HPCloud')
       .using('projectId').from('cxt:projectid')
       .using('cache').from('cxt:authcache')
+    .does(BetaBlocker, 'block')
+      .using('grant').from('cxt:betaUsers')
+      .using('identity').from('cxt:identity')
     .does(webdav.hpcloud.LoadSwiftBridge, 'bridge')
       .using('endpoint').from('cxt:identityService')
       .using('identity').from('cxt:identity')
