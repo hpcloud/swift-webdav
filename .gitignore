@@ -3,3 +3,4 @@ child.log
 debug.log
 properties.json
 settings.json
+node_modules/
