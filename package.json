@@ -1,14 +1,14 @@
 {
-  "name": "pronto-webdav",
-  "description": "A Generic WebDAV Gateway",
-  "keywords": ["webdav", "http", "pronto"],
-  "version": "0.0.4",
-  "author": "Matt Butcher <matthew.butcher@hp.com>",
+  "name": "swift-webdav",
+  "description": "A WebDAV gateway to OpenStack Swift.",
+  "keywords": ["WebDAV", "http", "pronto", "OpenStack", "Swift"],
+  "version": "0.0.9",
+  "author": "Matt Butcher <technosophos@gmail.com>",
   "contributors": [
-    {"name": "Matt Butcher", "email": "matthew.butcher@hp.com"},
-    {"name": "Matt Farina", "email": "matthew.farina@hp.com"}
+    {"name": "Matt Butcher", "email": "technosophos@gmail.com"},
+    {"name": "Matt Farina", "email": "matt@mattfarina.com"}
   ],
-  "repository": "git://github.com/technosophos/pronto-webdav",
+  "repository": "git://github.com/HewlettPackard/swift-webdav",
   "main": "index",
   "scripts": {
     "test": "make test"
