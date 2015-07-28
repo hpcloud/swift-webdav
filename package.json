@@ -19,7 +19,8 @@
     "xmldom": ">=0.1.12",
     "pronto": ">=0.3.14",
     "posix": ">=0.0.10",
-    "memcached": ">=0.1.4"
+    "memcached": ">=0.1.4",
+    "hpcloud-js": "^1.0.0"
   },
   "engines": {"node": ">= 0.4.9 < 1.0.0"}
 }
