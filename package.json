@@ -3,6 +3,7 @@
   "description": "A WebDAV gateway to OpenStack Swift.",
   "keywords": ["WebDAV", "http", "pronto", "OpenStack", "Swift"],
   "version": "0.0.9",
+  "license": "Apache-2.0",
   "author": "Matt Butcher <technosophos@gmail.com>",
   "contributors": [
     {"name": "Matt Butcher", "email": "technosophos@gmail.com"},
