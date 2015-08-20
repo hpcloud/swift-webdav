@@ -14,19 +14,19 @@
 # limitations under the License.
 #
 ### BEGIN INIT INFO
-# Provides:            hpcloud-webdav
+# Provides:            swift-webdav
 # Required-Start:      $remote_fs $syslog
 # Required-Stop:       $remote_fs $syslog
 # Should-Start:                $local_fs
 # Should-Stop:         $local_fs
 # Default-Start:       2 3 4 5
 # Default-Stop:                0 1 6
-# Short-Description:   Start hpcloud-webav daemon
-# Description:         Start hpcloud-webdav, a WebDAV gateway to HPCloud
+# Short-Description:   Start swift-webav daemon
+# Description:         Start swift-webdav, a WebDAV gateway to HPCloud
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-BASEDIR=/opt/hpcloud-webdav
+BASEDIR=/opt/swift-webdav
 MAINSCRIPT=$BASEDIR/server.js
 CONFIG=$BASEDIR/settings.json
 FOREVER=$BASEDIR/node_modules/forever/bin/forever
@@ -34,7 +34,7 @@ FOREVER=$BASEDIR/node_modules/forever/bin/forever
 #LOGDIR=/var/log
 LOGDIR=/tmp
 
-DESC=hpcloud-webdav
+DESC=swift-webdav
 
 CMD="/usr/bin/node $MAINSCRIPT"
 
@@ -65,7 +65,7 @@ case "$1" in
     $FOREVER list
     ;;
   *)
-    echo "Usage: hpcloud-webdav {start|stop|restart|status}" >&2
+    echo "Usage: swift-webdav {start|stop|restart|status}" >&2
     exit 1
     ;;
 esac

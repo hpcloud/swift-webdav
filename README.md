@@ -1,13 +1,13 @@
-# HPCloud WebDAV
+# Swift WebDAV Proxy
 
-A WebDAV library for connecting to HP Cloud services.
-
-This library provides a general WebDAV implementation along with support
-for connecting to HP Cloud.
+The Swift WebDAV Proxy provides a mechanism to connect to OpenStack Swift, the
+object storage project, via [WebDAV](https://en.wikipedia.org/wiki/WebDAV). That
+includes the ability to connect to Swift in [HP Helion OpenStack](http://www8.hp.com/us/en/cloud/hphelion-openstack.html)
+and [HP Public Cloud](http://www.hpcloud.com/).
 
 ## How It Works
 
-HPCloud-WebDAV provides three things:
+Swift WebDAV Proxy provides three things:
 
 - A complete WebDAV library.
 - A WebDAV server.
@@ -21,7 +21,8 @@ Short version:
 
 ~~~
 $ sudo apt-get intall nodejs npm memcached libcap2-bin
-$ cd HPCloud-WebDAV
+$ git clone https://github.com/hpcloud/swift-webdav
+$ cd swift-webdav
 $ cp example.settings.json settings.json
 $ edit settings.json
 $ node server.js
@@ -29,21 +30,19 @@ $ node server.js
 
 Detailed version:
 
-1. Clone the HPCloud-JS repository from GitHub Enterprise:
-   `git clone https://git.hpcloud.net/butchema/hpcloud-js`
-2. Clone the HPCloud-WebDAV repository from GitHub Enterprise:
-   `git clone https://git.hpcloud.net/butchema/hpcloud-webdav`
-3. Install Node.JS. On Ubuntu Linux, you can install with:
-   `sudo apt-get install nodejs`
-4. (ONLY FOR DEVS) Install NPM. On Ubuntu Linux, you can install with:
-   `sudo apt-get install npm`
-5. Install Memcached. On Ubuntu Linux you can install that with:
+1. Clone the swift-webdav repository from GitHub Enterprise:
+   `git clone https://github.com/hpcloud/swift-webdav`
+2. Install Node.js. On Ubuntu Linux, you can install with:
+   `sudo apt-get install nodejs npm`
+3. Install Memcached. On Ubuntu Linux you can install that with:
    `sudo apt-get install memcached` (Make sure memcached starts.)
-6. At a commandline, change directories into the HPCloud-WebDAV
-   directory: `cd hpcloud-webdav`
-7. Create a settings file. The easiest way to do this is:
+4. At a commandline, change directories into the swift-webdav
+   directory: `cd swift-webdav`
+5. Install Node.js dependencies:
+   `npm install`
+6. Create a settings file. The easiest way to do this is:
    `cp example.settings.json settings.json && edit settings.json`
-8. Start the WebDAV server: `node server.js`.
+7. Start the WebDAV server: `node server.js`.
 
 You will now have a sing WebDAV server. By default, it is listening on
 `localhost:8000`, though you can change that in the settings.
@@ -58,9 +57,10 @@ steps should be done:
 
 * Install `libcap2-bin`: `sudo apt-get install libcap2-bin`
 * Allow Node.js to bind to low ports: `sudo setcap cap_net_bind_service=+ep /usr/bin/node`
-* Run as a non-privileged user: `node server.js path/to/settings.json` 
+* Run as a non-privileged user: `node server.js path/to/settings.json`
 
-**DO NOT** install `npm` on a production system.
+We recommend that you **DO NOT** install `npm` on a production system. Instead
+package up the server and it's JavaScript dependencies then deploy that package.
 
 ## Running with Forever.js
 
@@ -71,12 +71,12 @@ forever start path/to/server.js path/to/settings.json
 ## Running with the start/stop daemon
 
 ```
-$ bin/hpcloud-webdav start
+$ bin/swift-webdav start
 ```
- 
-## Pronto.js and HPCloud-WebDAV
 
-Pronto is an application framework for Node.js. HPCloud-WebDAV is built
+## Pronto.js and Swift-WebDAV
+
+Pronto is an application framework for Node.js. Swift-WebDAV is built
 for that framework. It assumes the basic model, and is designed to make
 it trivially easy to modify WebDAV behavior using the Pronto
 configuration.
@@ -85,7 +85,7 @@ Start with the `server.js` file.
 
 ## Extending
 
-HPCloud-WebDAV is built to be extended.
+Swift-WebDAV is built to be extended.
 
 To add your own backend:
 
@@ -97,7 +97,7 @@ The code in `lib/fs` will get you started.
 ## External Utilities
 
 There are a few command line utilities that can be used for testing
-HPCloud-WebDAV:
+Swift-WebDAV:
 
 - cadaver: http://www.webdav.org/cadaver/
 - nd: http://gohome.org/nd/
@@ -125,7 +125,7 @@ error code (400) to both of these requests, the regression (which
 assumes the bug) breaks. THIS IS THE CORRECT BEHAVIOR.
 - prop: 17 prophighunicode, 18 propget: This tests Plane 1 unicode,
 which JavaScript does not support
-(http://en.wikipedia.org/wiki/Mapping_of_Unicode_character_planes). 
+(http://en.wikipedia.org/wiki/Mapping_of_Unicode_character_planes).
 
 ### Locks Tests
 
